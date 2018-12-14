@@ -4,8 +4,9 @@ Creare un docker nginx configurato per il reverse proxy
 
 
 ### Creo container nginx di default i
+```
 docker run -d --name nginx-default nginx
-
+```
 
 ### mi collego all’interno del container nginx via shell (riga di comando)
 
@@ -37,6 +38,22 @@ location /odoo1 {
     }
 ```
 in questo caso odoo1 è il nome del container e la relativa porta.
+
+### Configurazione Dockerfile
+Adesso creiamo il docker file con questo contenuto:
+
+```
+FROM nginx
+#rinomina il file di configurazione esistente
+RUN mv /etc/nginx/conf.d/default.conf default.conf.orig
+#copia il file di configurazione personalizzato nella cartella
+COPY default.conf /etc/nginx/conf.d
+```
+
+### Creazione nuova immagine
+A questo punto siamo pronti per creare la nuova immagine che all'interno
+conterrà il nostro file di configurazione default.conf
+
 
 
 
