@@ -52,11 +52,27 @@ COPY default.conf /etc/nginx/conf.d
 
 ### Creazione nuova immagine
 A questo punto siamo pronti per creare la nuova immagine che all'interno
-conterrà il nostro file di configurazione default.conf
+conterrà il nostro file di configurazione default.conf, possiamo quindi (per un discorso di ordine)
+cancellare il container nginx-default che abbiamo precedentemente creato.
+Il comando per cancellare il containert è:
+```
+docker rm -f nginx-default
+```
+quindi creiamo la nuova immagine con il seguente comando:
+
+```
+docker build -t nginx_enrico .
+```
+
+Nota: nginx_reverse_proxy_enrico è il nome che ho dato alla nuova immagine creata.
 
 
+#### Creiamo il container sulla nuova immagine
+quindi eseguiamo il comando run mappando il container sulla porta 80 e linkando il container ai servizi a cui si vuole puntare con il reverse proxy:
 
+```
+docker run -d --name proxy_nginx --link odoo1 --link odoo2 -p 80:80 nginx_enrico
 
-
+```
   
 
